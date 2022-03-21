@@ -33,7 +33,7 @@ test_requirements = [
 setup(
     author="Scott Rothbarth",
     author_email='srserves85@gmail.com',
-    python_requires='>3.6, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, !=3.5.*, !=3.6.*',
+    python_requires='>3.6',
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'Intended Audience :: Developers',
