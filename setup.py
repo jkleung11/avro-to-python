@@ -14,19 +14,19 @@ with open('HISTORY.rst') as history_file:
 requirements = ['Jinja2==2.10.3', 'Click==7.0', 'MarkupSafe==2.0.1']
 
 test_requirements = [
-    'pip==19.2.3',
-    'bump2version==0.5.11',
-    'wheel==0.33.6',
-    'watchdog==0.9.0',
-    'flake8==3.7.8',
-    'tox==3.14.0',
-    'coverage==4.5.4',
-    'Sphinx==1.8.5',
-    'twine==1.14.0',
-    'Click==7.0',
-    'pytest==4.6.5',
-    'pytest-runner==5.1',
-    'Jinja2==2.10.3',
+    'pip==22.0.4',
+    'bump2version==1.0.1',
+    'wheel==0.37.1',
+    'watchdog==2.1.6',
+    'flake8==4.0.1',
+    'tox==3.24.5',
+    'coverage==6.3.2',
+    'Sphinx==4.4.0',
+    'twine==3.8.0',
+    'Click==8.0.4',
+    'pytest==7.1.1',
+    'pytest-runner==6.0.0',
+    'Jinja2==3.0.3',
     'MarkupSafe==2.0.1'
 ]
 
@@ -61,6 +61,6 @@ setup(
     test_suite='tests',
     tests_require=test_requirements,
     url='https://github.com/srserves85/avro-to-python',
-    version='0.4.0',
+    version='1.0.0',
     zip_safe=False,
 )
