@@ -1,5 +1,5 @@
 """ helper function for generating a record file """
-
+import copy
 from typing import List
 
 from avro_to_python.classes.file import File
@@ -85,6 +85,7 @@ def _record_file(file: File, item: dict, queue: List[dict]) -> None:
             )
 
         elif fieldtype == 'reference':
+            field = _prepare_field_for_reference(field)
             field = _reference_type(
                 field=field,
                 references=references
@@ -101,3 +102,28 @@ def _record_file(file: File, item: dict, queue: List[dict]) -> None:
         file.imports += references
 
     file.imports = dedupe_imports(file.imports)
+
+
+def _prepare_field_for_reference(field: dict) -> dict:
+    """parse the field dictionary and return one that will create a meaningful reference object
+
+    there are basicaly two ways we encounter references at this stage
+        field = {'name': 'RecordClass', 'type': 'path.to.containing.namespace'}
+        field = {'name': 'fieldName', 'type': 'path.to.containing.namespace.RecordClass'}
+
+    I *think* the reason we encounter the latter is due to a malformed `avsc` file (which in turn I
+    *think* happens due to a bug in the job that converts avdl -> avsc). Either way, we try to
+    handle that before we attempt to create a reference
+    """
+    ref_field = copy.deepcopy(field)
+    name = ref_field['name']
+    typ = ref_field['type']
+    # bad proxies for the behavior I'm talking about above
+    name_is_alias = name[0].islower()
+    type_is_record_class = typ.count('.') > 0 and not typ.islower()
+    if name_is_alias and type_is_record_class:
+        *new_type, new_name = typ.split('.')
+        new_type = '.'.join(new_type)
+        ref_field['name'] = new_name
+        ref_field['type'] = new_type
+    return ref_field
